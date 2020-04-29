@@ -1,0 +1,25 @@
+{
+  "name": "ectosense",
+  "version": "1.0.0",
+  "description": "Ectosense Assignment",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shravan-shandilya/ectosense.git"
+  },
+  "author": "Shravan Shandilya",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/shravan-shandilya/ectosense/issues"
+  },
+  "homepage": "https://github.com/shravan-shandilya/ectosense#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.5.6",
+    "winston": "^3.2.1"
+  }
+}
