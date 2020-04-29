@@ -8,6 +8,11 @@ const errors = {
     error: "requested resource is not found",
     code: 404,
   },
+  auth_not_present: { error: "authorization header missing", code: 401 },
+  auth_failure: {
+    error: "authorization failed",
+    code: 401,
+  },
   server_error: {
     error: "server failed to process your request",
     code: 500,

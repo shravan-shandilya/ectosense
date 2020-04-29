@@ -8,6 +8,7 @@ let _db = null;
 
 async function initDatabase() {
   return new Promise((resolve, reject) => {
+    return resolve(true);
     mongodb.MongoClient.connect(
       config.URL,
       {
