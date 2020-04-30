@@ -9,3 +9,9 @@ export const config = {
     EXPIRY: "2y",
   },
 };
+
+//mongo
+//ectosense
+//!P5$9BzFjYXUtGZ
+
+//mongodb+srv://ectosense:!P5$9BzFjYXUtGZ@cluster0-myjqb.mongodb.net/test
