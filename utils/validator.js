@@ -1,13 +1,14 @@
 "use strict";
 import validator from "validator";
+import { errors } from "../src/errors.js";
 
 export function validateAccessToken() {
   return validator.isJWT(token);
 }
 
-export function validate(path) {
+export function validate(object) {
   return function (req, _res, next) {
-    switch (path) {
+    switch (object) {
       case "signup":
         if (
           validator.isAlpha(req.body.fname) &&
@@ -17,7 +18,7 @@ export function validate(path) {
         ) {
           return next();
         } else {
-          throw new Error("invalid_parameters");
+          throw errors.InvalidParameters;
         }
 
       case "login":
@@ -27,8 +28,18 @@ export function validate(path) {
         ) {
           return next();
         } else {
-          throw new Error("invalid_parameters");
+          throw errors.InvalidParameters;
         }
+
+      case "jwt": {
+        if (req.headers.authorization == null)
+          throw errors.AuthenticationTokenMissing;
+        if (validator.isJWT(req.headers.authorization.split(" ")[1])) {
+          return next();
+        } else {
+          throw errors.AuthenticationTokenMalformed;
+        }
+      }
     }
   };
 }

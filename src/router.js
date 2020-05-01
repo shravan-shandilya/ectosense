@@ -5,6 +5,8 @@ import * as ac from "./controller/appointment.js"; // ac  -> appointmentControll
 import * as rc from "./controller/record.js"; // rc -> recordController
 
 import { validate } from "../utils/validator.js";
+import permissions from "../src/permissions.js";
+import { errors } from "./errors.js";
 
 function routes(app) {
   // Unprotected routes
@@ -12,15 +14,61 @@ function routes(app) {
   app.post("/v1/login", validate("login"), uc.handleLogin);
 
   // Appointments route
-  app.get("/v1/appointment", authenticate, authorize, ac.getAppointments);
+  app.get(
+    "/v1/appointment",
+    validate("jwt"),
+    authenticate,
+    authorize(
+      permissions.SCOPE.ANY |
+        permissions.RESOURCE.APPOINTMENT |
+        permissions.ACTIONS.VIEW
+    ),
+    ac.getAppointments
+  );
   app.get(
     "/v1/appointment/:appointmentId",
+    validate("jwt"),
     authenticate,
-    authorize,
+    authorize(
+      permissions.SCOPE.SELF |
+        permissions.RESOURCE.APPOINTMENT |
+        permissions.ACTIONS.VIEW
+    ),
     ac.getAppointment
   );
-  app.post("/v1/appointment", authenticate, authorize, ac.createAppointment);
-  app.put("/v1/appointment", authenticate, authorize, ac.modifyAppointment);
+  app.post(
+    "/v1/appointment",
+    validate("jwt"),
+    authenticate,
+    authorize(
+      permissions.SCOPE.SELF |
+        permissions.RESOURCE.APPOINTMENT |
+        permissions.ACTIONS.CREATE
+    ),
+    ac.createAppointment
+  );
+  app.put(
+    "/v1/appointment/:appointmentId",
+    validate("jwt"),
+    authenticate,
+    authorize(
+      permissions.SCOPE.SELF |
+        permissions.RESOURCE.APPOINTMENT |
+        permissions.ACTIONS.MODIFY
+    ),
+    ac.modifyAppointment
+  );
+  app.delete(
+    "/v1/appointment/:appointmentId",
+    validate("jwt"),
+    authenticate,
+    authorize(
+      permissions.SCOPE.SELF |
+        permissions.RESOURCE.APPOINTMENT |
+        permissions.ACTIONS.DELETE
+    ),
+    ac.modifyAppointment
+  );
 
   // Medical Record routes
   app.post("/v1/record", authenticate, authorize, rc.createRecord);
@@ -36,10 +84,10 @@ function routes(app) {
 
   // Generic 404s
   app.get("*", (_req, _res, next) => {
-    return next(new Error("not_found"));
+    return next(errors.NotFoundError);
   });
   app.post("*", (_req, _res, next) => {
-    return next(new Error("not_found"));
+    return next(errors.NotFoundError);
   });
 }
 

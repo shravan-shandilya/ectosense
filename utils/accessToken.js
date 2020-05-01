@@ -14,7 +14,7 @@ export function createAccessToken(user) {
       },
       function (err, token) {
         if (err) {
-          return reject(new Error("server_error"));
+          return reject(err);
         }
         user["token"] = token;
         return resolve(user);
@@ -25,9 +25,12 @@ export function createAccessToken(user) {
 
 export function verifyAccessToken(accessToken) {
   return new Promise((resolve, reject) => {
-    jwt.verify(accessToken, config.SECRET, function (err, decoded) {
+    jwt.verify(accessToken, config.ACCESS_TOKEN.SECRET, function (
+      err,
+      decoded
+    ) {
       if (err) {
-        return reject(new Error("auth_failure"));
+        return reject(err);
       }
       return resolve({ userId: decoded.userId, email: decoded.email });
     });

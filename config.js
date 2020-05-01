@@ -9,6 +9,6 @@ export const config = {
   },
   ACCESS_TOKEN: {
     SECRET: "hello",
-    EXPIRY: "1m",
+    EXPIRY: "1y",
   },
 };

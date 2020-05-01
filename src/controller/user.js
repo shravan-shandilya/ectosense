@@ -3,6 +3,7 @@ import * as uuid from "uuid";
 import * as userModel from "../models/user.js";
 import { createPasswordHash, verifyPasswordHash } from "../../utils/hash.js";
 import { createAccessToken } from "../../utils/accessToken.js";
+import { errors } from "../errors.js";
 
 export async function handleSignup(req, res, next) {
   let user = {
@@ -19,7 +20,7 @@ export async function handleSignup(req, res, next) {
     .isEmailAvailable(user.email)
     .then((availability) => {
       if (!availability) {
-        throw new Error("email_not_available");
+        throw errors.EmailNotAvailable;
       }
       return userModel.createUser(user);
     })
@@ -41,13 +42,13 @@ export function handleLogin(req, res, next) {
     .then((_user) => {
       user = _user;
       if (user == null) {
-        throw new Error("invalid_credentials");
+        throw errors.InvalidCredentials;
       }
       return verifyPasswordHash(req.body.password, user.passwordHash);
     })
     .then((verificationResult) => {
       if (!verificationResult) {
-        throw new Error("invalid_credentials");
+        throw errors.InvalidCredentials;
       }
       return createAccessToken(user);
     })
