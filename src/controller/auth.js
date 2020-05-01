@@ -24,6 +24,3 @@ export function authenticate(req, res, next) {
 export function authorize(req, res, next) {
   return next();
 }
-
-export function handleSignup(req, res, next) {}
-export function handleLogin(req, res, next) {}

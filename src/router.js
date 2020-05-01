@@ -1,18 +1,15 @@
 "use strict";
-import {
-  authenticate,
-  authorize,
-  handleSignup,
-  handleLogin,
-} from "./controller/auth.js";
-
+import { authenticate, authorize } from "./controller/auth.js";
+import * as uc from "./controller/user.js";
 import * as ac from "./controller/appointment.js"; // ac  -> appointmentController
 import * as rc from "./controller/record.js"; // rc -> recordController
 
+import { validate } from "../utils/validator.js";
+
 function routes(app) {
   // Unprotected routes
-  app.post("/v1/signup", handleSignup);
-  app.post("/v1/login", handleLogin);
+  app.post("/v1/signup", validate("signup"), uc.handleSignup);
+  app.post("/v1/login", validate("login"), uc.handleLogin);
 
   // Appointments route
   app.get("/v1/appointment", authenticate, authorize, ac.getAppointments);

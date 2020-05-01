@@ -1,22 +1,23 @@
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { config } from "../config.js";
 
-export function generateAccessToken(user) {
+export function createAccessToken(user) {
   return new Promise((resolve, reject) => {
     jwt.sign(
       {
         userId: user._id,
         email: user.email,
       },
-      config.SECRET,
+      config.ACCESS_TOKEN.SECRET,
       {
-        expiresIn: config.EXPIRY,
+        expiresIn: config.ACCESS_TOKEN.EXPIRY,
       },
       function (err, token) {
         if (err) {
           return reject(new Error("server_error"));
         }
-        return resolve(token);
+        user["token"] = token;
+        return resolve(user);
       }
     );
   });

@@ -1,17 +1,14 @@
 export const config = {
+  APP: {
+    SALT_ROUNDS: 10,
+  },
   MONGO: {
-    URL: "",
-    DATABASE: "",
+    URL: "mongodb+srv://ectosense:!P5$9BzFjYXUtGZ@cluster0-myjqb.mongodb.net",
+    DATABASE: "ectosense",
     POOL_SIZE: 20,
   },
   ACCESS_TOKEN: {
-    SECRET: "",
-    EXPIRY: "2y",
+    SECRET: "hello",
+    EXPIRY: "1m",
   },
 };
-
-//mongo
-//ectosense
-//!P5$9BzFjYXUtGZ
-
-//mongodb+srv://ectosense:!P5$9BzFjYXUtGZ@cluster0-myjqb.mongodb.net/test

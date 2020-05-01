@@ -13,9 +13,17 @@ const errors = {
     error: "authorization failed",
     code: 401,
   },
+  email_not_available: {
+    error: "email is not available",
+    code: 401,
+  },
   server_error: {
     error: "server failed to process your request",
     code: 500,
+  },
+  invalid_parameters: {
+    error: "invalid parameters",
+    code: 401,
   },
 };
 
@@ -27,6 +35,11 @@ export function errorHandler(err, req, res, next) {
   logger.error(
     `${MODULE} errored in handling ${req.method} request on ${req.originalUrl} ${errorType}`
   );
+
+  if (errorType === "server_error") {
+    logger.error(err);
+    console.trace();
+  }
 
   res.status(error.code).send(error);
 }

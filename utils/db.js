@@ -8,20 +8,21 @@ let _db = null;
 
 async function initDatabase() {
   return new Promise((resolve, reject) => {
-    return resolve(true);
+    // return resolve(true);
     mongodb.MongoClient.connect(
-      config.URL,
+      config.MONGO.URL,
       {
-        poolSize: config.POOL_SIZE,
+        poolSize: config.MONGO.POOL_SIZE,
         useNewUrlParser: true,
+        useUnifiedTopology: true,
       },
       function (err, client) {
         if (err) {
           logger.error(`${MODULE} mongodb connect failed!`, err);
           return reject(err);
         }
-        logger.log(`${MODULE} connected successfully to mongodb`);
-        _db = client.db(config.DATABASE);
+        logger.info(`${MODULE} connected successfully to mongodb`);
+        _db = client.db(config.MONGO.DATABASE);
         return resolve(true);
       }
     );
