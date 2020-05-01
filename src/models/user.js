@@ -54,3 +54,16 @@ export function getUserByEmail(email) {
       });
   });
 }
+
+export function getUserPermissions(userId) {
+  return new Promise((resolve, reject) => {
+    users
+      .findOne({ _id: userId })
+      .then((user) => {
+        return resolve(user.permissions);
+      })
+      .catch((err) => {
+        return reject(err);
+      });
+  });
+}

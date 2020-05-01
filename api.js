@@ -7,7 +7,7 @@ import { initDatabase } from "./utils/db.js";
 import { errorHandler } from "./src/errors.js";
 
 const port = process.env.PORT || 8000;
-const MODULE = "[Ectosense API]";
+const MODULE = "[API]";
 
 (async function () {
   logger.info(`${MODULE} initializing the database: ${await initDatabase()}`);

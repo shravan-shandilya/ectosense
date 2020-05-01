@@ -42,7 +42,6 @@ export function errorHandler(err, req, res, next) {
 
   if (errorType === "server_error") {
     logger.error(err);
-    console.trace();
   }
 
   res.status(error.code).send(error);

@@ -15,3 +15,7 @@ export function createAppointment(_req, res, next) {
 export function modifyAppointment(_req, res, next) {
   res.send("pong");
 }
+
+export function deleteAppointment(_req, res, next) {
+  res.send("pong");
+}
