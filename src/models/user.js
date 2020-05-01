@@ -41,3 +41,16 @@ export function getUser(userId) {
       });
   });
 }
+
+export function getUserByEmail(email) {
+  return new Promise((resolve, reject) => {
+    users
+      .findOne({ email })
+      .then((user) => {
+        return resolve(user);
+      })
+      .catch((err) => {
+        return reject(err);
+      });
+  });
+}

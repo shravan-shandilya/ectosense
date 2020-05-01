@@ -17,6 +17,10 @@ const errors = {
     error: "email is not available",
     code: 401,
   },
+  invalid_credentials: {
+    error: "invalid credentials",
+    code: 401,
+  },
   server_error: {
     error: "server failed to process your request",
     code: 500,

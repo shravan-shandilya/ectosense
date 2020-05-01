@@ -35,9 +35,14 @@ export async function handleSignup(req, res, next) {
 }
 
 export function handleLogin(req, res, next) {
+  let user = null;
   userModel
-    .getUserByEmail(user.email)
-    .then((user) => {
+    .getUserByEmail(req.body.email)
+    .then((_user) => {
+      user = _user;
+      if (user == null) {
+        throw new Error("invalid_credentials");
+      }
       return verifyPasswordHash(req.body.password, user.passwordHash);
     })
     .then((verificationResult) => {
